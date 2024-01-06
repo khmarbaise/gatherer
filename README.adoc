@@ -19,7 +19,8 @@
 = JDK 22 Features - Gatherer
 
 * Gatherer https://openjdk.org/jeps/461
-* Example Project related to a blog article.
+* Example Project related to a blog article
+** https://blog.soebes.io/posts/2024/01/2024-01-07-jdk-gatherer/
 
 == State
 
