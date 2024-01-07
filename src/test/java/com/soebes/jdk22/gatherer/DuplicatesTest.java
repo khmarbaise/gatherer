@@ -36,6 +36,7 @@ class DuplicatesTest {
   void exampleFindDuplicates() {
     var integers = List.of(100, 1, 10, 11, 5, 10, 11, 5, 100, 75, 78, 90);
     var duplicates = findDuplicates(integers);
+    assertThat(duplicates).containsExactlyInAnyOrder(100, 10, 11, 5);
     System.out.println("duplicates = " + duplicates);
   }
 
@@ -79,6 +80,7 @@ class DuplicatesTest {
    * This {@link Gatherer} will result in all duplicates within the {@link java.util.stream.Stream}.
    * @param <T>
    * @return {@link Gatherer}
+   * @implNote This implementation uses a {@link Gatherer#combiner()}.
    */
   static <T> Gatherer<? super T, ?, T> duplicates() {
     Supplier<HashMap<T, Integer>> initializer = HashMap::new;
@@ -113,6 +115,7 @@ class DuplicatesTest {
    *
    * @param <T>
    * @return
+   * @implNote We don't use a {@link Gatherer#combiner()}.
    */
   static <T> Gatherer<? super T, ?, T> duplicatesWithoutCombiner() {
     Supplier<HashMap<T, Integer>> initializer = HashMap::new;
