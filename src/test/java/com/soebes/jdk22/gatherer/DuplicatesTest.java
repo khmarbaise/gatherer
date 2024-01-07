@@ -75,13 +75,17 @@ class DuplicatesTest {
     assertThat(resultList).containsExactlyInAnyOrder("A", "BB");
   }
 
-  // Gatherer<? super T, ?, R> gatherer
+  /**
+   * This {@link Gatherer} will result in all duplicates within the {@link java.util.stream.Stream}.
+   * @param <T>
+   * @return {@link Gatherer}
+   */
   static <T> Gatherer<? super T, ?, T> duplicates() {
     Supplier<HashMap<T, Integer>> initializer = HashMap::new;
     //
     Gatherer.Integrator<HashMap<T, Integer>, T, T> integrator = (state, element, _) -> {
-      var orDefault = state.getOrDefault(element, 0);
-      state.put(element, orDefault + 1);
+      var currentNumber = state.getOrDefault(element, 0);
+      state.put(element, currentNumber + 1);
       return true;
     };
     //
@@ -104,12 +108,18 @@ class DuplicatesTest {
     return Gatherer.of(initializer, integrator, combiner, finisher);
   }
 
+  /**
+   * An implementation without {@link Gatherer#combiner()}.
+   *
+   * @param <T>
+   * @return
+   */
   static <T> Gatherer<? super T, ?, T> duplicatesWithoutCombiner() {
     Supplier<HashMap<T, Integer>> initializer = HashMap::new;
     //
     Gatherer.Integrator<HashMap<T, Integer>, T, T> integrator = (state, element, _) -> {
-      var orDefault = state.getOrDefault(element, 0);
-      state.put(element, orDefault + 1);
+      var currentNumber = state.getOrDefault(element, 0);
+      state.put(element, currentNumber + 1);
       return true;
     };
     //

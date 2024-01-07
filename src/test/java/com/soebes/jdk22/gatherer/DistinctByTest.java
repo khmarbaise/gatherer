@@ -47,9 +47,8 @@ class DistinctByTest {
   }
 
   @Test
-  void usingDistrinctBy() {
+  void usingDistinctBy() {
     var stringStream = List.of("123456", "foo", "bar", "baz", "quux", "anton", "egon", "banton");
-//    var stringStream = List.<String>of("A", "B", "C", "DD", "EE", "FFF");
     var groupingBy = stringStream.stream().collect(Collectors.groupingBy(String::length));
     var result = stringStream
         .parallelStream()
@@ -83,6 +82,13 @@ class DistinctByTest {
     System.out.println("result = " + result);
   }
 
+  /**
+   * The implementation without a {@link Gatherer#finisher()}
+   * @param classifier The classifier to differentiate.
+   * @param <T>
+   * @param <A>
+   * @return {@link Gatherer}
+   */
   static <T, A> Gatherer<T, ?, T> distinctByWithoutFinisher(Function<? super T, ? extends A> classifier) {
     Supplier<HashMap<A, List<T>>> initializer = HashMap::new;
     //

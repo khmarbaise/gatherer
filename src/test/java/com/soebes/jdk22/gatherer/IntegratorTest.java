@@ -27,6 +27,12 @@ import java.util.stream.Gatherer;
 
 class IntegratorTest {
 
+  /**
+   * A no operation {@link Gatherer}.
+   *
+   * @param <T>
+   * @return {@link Gatherer} which does nothing.
+   */
   private static <T> Gatherer<T, ?, T> mapNoOp() {
     Gatherer.Integrator<Void, T, T> integrator = (_, element, downstream) -> {
       downstream.push(element);
@@ -34,9 +40,6 @@ class IntegratorTest {
     };
     return Gatherer.ofSequential(integrator);
   }
-
-  // <A, T, R>
-  // A state, T element, Downstream<? super R> downstream
 
   private static final Gatherer.Integrator<Void, Integer, ? super Integer> noOp =
       //We could use "_" instead of "state"!
